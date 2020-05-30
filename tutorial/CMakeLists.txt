@@ -1,17 +1,5 @@
 
 
-
-add_executable(tutorial1 "t1.cpp")
-
-add_executable(tutorial2 "t2.cpp")
-
-add_executable(tutorial3 "t3.cpp")
-
-add_executable(tutorial4 "t4.cpp")
-
-add_executable(tutorial5 "t5.cpp")
-
-
 ######################################
 #  tutorial Information
 ######################################
@@ -25,7 +13,9 @@ message(CMAKE_BUILD_TYPE              =  ${CMAKE_BUILD_TYPE})
 
 
 
-foreach(target_module tutorial1 tutorial2 tutorial3 tutorial4 tutorial5)
+foreach(target_module t1 t2 t3 t4 t5 d1 d2)
+
+	add_executable(${target_module} "${target_module}.cpp")
 
 	target_include_directories( ${target_module}  
 		PRIVATE 
