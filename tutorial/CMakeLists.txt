@@ -13,7 +13,7 @@ message(CMAKE_BUILD_TYPE              =  ${CMAKE_BUILD_TYPE})
 
 
 
-foreach(target_module t1 t2 t3 t4 t5 d1 d2)
+foreach(target_module t1 t2 t3 t4 t5 d1 d2 d3 d4 d5 d6)
 
 	add_executable(${target_module} "${target_module}.cpp")
 
