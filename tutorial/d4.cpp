@@ -15,7 +15,8 @@ int main(int argc, char* argv[]) {
     asio::io_context ioContext;
 
     udp::resolver resolver(ioContext);
-    udp::endpoint receiveEndpoint = *(resolver.resolve(udp::v4(), argv[1], "daytime").begin());
+    //udp::endpoint receiveEndpoint = *(resolver.resolve(udp::v4(), argv[1], "daytime").begin());
+    udp::endpoint receiveEndpoint = *(resolver.resolve(udp::v4(), argv[1], "20013").begin());
 
     udp::socket socket(ioContext);
     socket.open(udp::v4());
