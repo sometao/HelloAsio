@@ -18,35 +18,36 @@ class Printer {
     if(count > 20 ) {
       return;
     }
+    auto tid = std::this_thread::get_id();
 
-
-    std::cout << "print [1] :[" << count << "]" << std::endl;
+    std::cout << "[" << tid << "] print1 :[" << count << "]" << std::endl;
     count++;
     timer1.expires_from_now(asio::chrono::seconds(1));
 
     //timer1.async_wait(std::bind(&Printer::print1, this));
     timer1.async_wait(asio::bind_executor(strand_, std::bind(&Printer::print1, this)));
 
-    std::cout << "print1 sleep begin" << std::endl;
+    std::cout << "[" << tid << "] print1 sleep begin" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::cout << "print1 sleep end" << std::endl;
+    std::cout << "[" << tid << "] print1 sleep end" << std::endl;
   }
 
   void print2() {
     if(count > 20 ) {
       return;
     }
+    auto tid = std::this_thread::get_id();
 
-    std::cout << "print [2] :[" << count << "]" << std::endl;
+    std::cout << "[" << tid << "] print2 :[" << count << "]" << std::endl;
     count++;
     timer2.expires_at(timer2.expiry() + asio::chrono::seconds(1));
 
     //timer2.async_wait(std::bind(&Printer::print2, this));
     timer2.async_wait(asio::bind_executor(strand_, std::bind(&Printer::print2, this)));
 
-    std::cout << "print2 sleep begin" << std::endl;
+    std::cout << "[" << tid << "] print2 sleep begin" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::cout << "print2 sleep end" << std::endl;
+    std::cout << "[" << tid << "] print2 sleep end" << std::endl;
   }
 
  public:
@@ -67,7 +68,7 @@ class Printer {
 void foo(int a) { std::cout << a << std::endl; }
 
 int main() {
-  std::cout << "Hello, I am t4." << std::endl;
+  std::cout << "Hello, I am t5." << std::endl;
 
   asio::io_context io;
   Printer printer(io);

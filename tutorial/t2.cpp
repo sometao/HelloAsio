@@ -6,10 +6,12 @@
 #include "asio.hpp"
 
 
-void my_print(const asio::error_code& /*e*/) {
-  std::cout << "Hello, world!  begin." << std::endl;
-  std::this_thread::sleep_for(asio::chrono::seconds(1));
-  std::cout << "Hello, world!   end." << std::endl;
+void my_handler(const asio::error_code& e) {
+  std::cout << "my_handler: Hello, world!  begin." << std::endl;
+  auto v = e.value();
+  auto m = e.message();
+  std::this_thread::sleep_for(asio::chrono::seconds(5));
+  std::cout << "my_handler: Hello, world!   end. v="<< v << ", m=" << m << std::endl;
 }
 
 
@@ -20,10 +22,10 @@ int main() {
   asio::steady_timer t(io, asio::chrono::seconds(5));
 
   std::cout << ". 0 ." << std::endl;
-  // std::this_thread::sleep_for(asio::chrono::seconds(4));
+  std::this_thread::sleep_for(asio::chrono::seconds(4));
 
   std::cout << ". 1 ." << std::endl;
-  t.async_wait(&my_print);
+  t.async_wait(&my_handler);
   std::cout << ". 2 ." << std::endl;
 
 
@@ -34,6 +36,7 @@ int main() {
     io.run(); // wait/block here.
     std::cout << "lambda done." << std::endl;
   });
+
   std::cout << ". begin join ." << std::endl;
   work.join();
 

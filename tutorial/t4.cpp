@@ -12,9 +12,13 @@ class Printer {
   int count;
 
   void print() {
+    if(count > 6) {
+      return;
+    }
     std::cout << "print:[" << count << "]" << std::endl;
     count++;
-    timer.expires_from_now(asio::chrono::seconds(1));
+    //timer.expires_from_now(asio::chrono::seconds(1));
+    timer.expires_at(timer.expiry() + asio::chrono::seconds(1));
     timer.async_wait(std::bind(&Printer::print, this));
   }
 

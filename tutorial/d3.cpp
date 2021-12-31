@@ -23,7 +23,6 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
   void handle_write(const asio::error_code& /*error*/, size_t /*bytes_transferred*/) {
     std::cout << "------------------- TcpConnection handle_write begin" << std::endl;
     std::cout << "------------------- TcpConnection handle_write end" << std::endl;
-
   }
 
  public:

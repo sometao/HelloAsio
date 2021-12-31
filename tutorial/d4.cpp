@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
 
     udp::socket socket(ioContext);
     socket.open(udp::v4());
+    //socket.bind(udp::endpoint(udp::v4(), 51234));
 
     char sendBuf[1] = {0};
     socket.send_to(asio::buffer(sendBuf),receiveEndpoint);

@@ -8,6 +8,10 @@
 using asio::ip::udp;
 using asio::ip::tcp;
 
+#if(_MSC_VER)
+
+#endif
+
 std::string make_daytime_string() {
   using namespace std;  // For time_t, time and ctime;
   time_t now = time(0);
