@@ -154,8 +154,10 @@ private:
             // 那么在deliver中就会将 write_in_progress 设置为false，添加一条新msg，然后再调用 do_write，
             // 由于deliver中添加了一条新msg，下面的代码会发现 write_msgs 非空，于是也会调用 do_write，
             // 那么就会有两个do_write函数同时被调用
-            // 若 ioCtx 中只有一个线程执行，那么后执行的 do_write 在执行到 write_msgs_.front().data() 会报错（因为此时write_msgs_已经为空）
-            // 若 ioCtx 中有多个线程在执行，那么它们有可能都会对 write_msgs_.front() 的数据进行发送，即可能产生数据重复
+            // 若 ioCtx 中只有一个线程执行，上面说的情况不会发生，因为程序在执行到这里时，deliver()不会同时在执行
+            // 若 ioCtx 中有多个线程在执行 
+            // - 它们有可能都会对 write_msgs_.front() 的数据进行发送，即可能产生数据重复
+            // - 也有可能后执行的 do_write 在执行到 write_msgs_.front().data() 报错（因为此时write_msgs_已经为空）
 
             if (!write_msgs_.empty())
             {
