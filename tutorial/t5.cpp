@@ -43,7 +43,8 @@ class Printer {
     timer2.expires_at(timer2.expiry() + asio::chrono::seconds(1));
 
     //timer2.async_wait(std::bind(&Printer::print2, this));
-    timer2.async_wait(asio::bind_executor(strand_, std::bind(&Printer::print2, this)));
+    auto ex = asio::bind_executor(strand_, std::bind(&Printer::print2, this));
+    timer2.async_wait(ex);
 
     std::cout << "[" << tid << "] print2 sleep begin" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(2));

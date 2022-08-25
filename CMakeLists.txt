@@ -73,4 +73,6 @@ add_subdirectory(tutorial)
 
 add_subdirectory(examples)
 
+add_subdirectory(learning)
+
 

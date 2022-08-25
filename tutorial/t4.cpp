@@ -22,9 +22,23 @@ class Printer {
     timer.async_wait(std::bind(&Printer::print, this));
   }
 
+
+  void print1(const asio::error_code& err) {
+    if(count > 6) {
+      return;
+    }
+    std::cout << "print:[" << count << "]" << std::endl;
+    count++;
+    //timer.expires_from_now(asio::chrono::seconds(1));
+    timer.expires_at(timer.expiry() + asio::chrono::seconds(1));
+    timer.async_wait(std::bind(&Printer::print1, this, std::placeholders::_1));
+  }
+
  public:
   Printer(asio::io_context& io) : timer(io, asio::chrono::seconds(1)), count(0) {
-    timer.async_wait(std::bind(&Printer::print, this));
+    //timer.async_wait(std::bind(&Printer::print, this));
+    timer.async_wait(std::bind(&Printer::print1, this, std::placeholders::_1));
+
   }
 
   ~Printer() { std::cout << "Final count is " << count << std::endl; }

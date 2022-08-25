@@ -15,18 +15,31 @@ void my_handler(const asio::error_code& e) {
 }
 
 
+void my_handler2(const asio::error_code& e) {
+  std::cout << "Hi, I'm heander [ 2 ]" << std::endl;
+}
+
+void my_handler3(const asio::error_code& e) {
+  std::cout << "Hi, I'm heander [ 3 ]" << std::endl;
+}
+
+
 int main() {
   std::cout << "Hello, I am t2." << std::endl;
 
   asio::io_context io;
-  asio::steady_timer t(io, asio::chrono::seconds(5));
+  asio::steady_timer t(io, asio::chrono::seconds(3));
 
   std::cout << ". 0 ." << std::endl;
-  std::this_thread::sleep_for(asio::chrono::seconds(4));
+  std::this_thread::sleep_for(asio::chrono::seconds(1));
 
   std::cout << ". 1 ." << std::endl;
-  t.async_wait(&my_handler);
+  t.async_wait(&my_handler2);
   std::cout << ". 2 ." << std::endl;
+  t.async_wait(&my_handler);
+  std::cout << ". 3 ." << std::endl;
+  t.async_wait(&my_handler3);
+  std::cout << ". 4 ." << std::endl;
 
 
   //io.run();

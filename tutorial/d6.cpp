@@ -19,6 +19,7 @@ class UdpServer {
   udp::endpoint remote_endpoint_;
   std::vector<char> recvBuf;
 
+
   void handle_send(std::shared_ptr<std::string> /*message*/,
                    const asio::error_code& /*error*/,
                    std::size_t /*bytes_transferred*/) {}
@@ -26,6 +27,7 @@ class UdpServer {
   void handle_receive(std::error_code error, std::size_t len) {
     if (!error) {
       auto msg = std::make_shared<std::string>(make_daytime_string());
+
 
       socket_.async_send_to(
           asio::buffer(*msg), remote_endpoint_,
